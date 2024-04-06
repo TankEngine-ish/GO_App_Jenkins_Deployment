@@ -18,7 +18,7 @@ Once again I've decided to experiment from the get-go and installed Jenkins on a
 
 * I installed openJDK 11 which is the open-source implementation of version 11 of the Java SE Platform.
 
-* Then I added the Jenkins repo to my system and after that I had to import the GPG keys from Jenkins site to verify the integrity of my packages.
+* Then I added the Jenkins repo to my system and after that I had to import the GPG keys from the Jenkins site to verify the integrity of my packages.
 
 * I followed up with actually installing Jenkins and getting a username and a password.
 
@@ -28,6 +28,27 @@ Once again I've decided to experiment from the get-go and installed Jenkins on a
 
 ![jenkinsfile](public/31321321.png)
 
+There are plenty of things in this file which I haven't yet gone over so let's dive right in.
+
+## Configuring the version of Go
+
+* In the Global Config Tool inside Jenkins I had to set the required version of Go. In the go.mod file it's 1.17 and on my system it's 1.18.1 so I tested it with the latter one and it worked.
+
+## Configuring Docker
+
+* Now this was a fun one. Getting the Jenkins file to build a docker image of your app on the WSL while only having it installed on the Windows.
+
+* First up, I installed all the required docker plugins, then I exposed the docker daemon to the default 2375 port and added it to the .bashrc file on my WSL. Unfortunately the build failed at the `app = docker.build("gojenkinsdeployment")` stage. The Docker couldn't connect to the port. 
+
+**So, what I had to do is manually forward that 2375 port using the `alpine/socat` docker image of the SOCAT port forwarder and moved it to 23750. You must do that step from your Powershell command, though, as it won't recognize the 2375 port from your WSL.**
+`docker run -d --restart=always -p 127.0.0.1:23750:2375 -v /var/run/docker.sock:/var/run/docker.sock  alpine/socat  tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock` 
+The above line starts a container with Alpine Linux and SOCAT, exposing the Docker API on port 23750 of the host system and allowing Docker client commands to communicate with the Docker daemon running inside the container.
+
+* Next up I added the Jenkins user to the docker group with `sudo usermod -aG docker jenkins`, then I restarted Jenkins and the step was a success.
+
+## Getting Blue Ocean
+
+Blue Ocean is a plugin that modernizes the UI of the pipeline interface.
 
 
 
