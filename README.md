@@ -56,14 +56,9 @@ Blue Ocean is a plugin that modernizes the UI of the pipeline interface.
 
 ## Build Agent Set-Up
 
+In terms of security, isolation and scalability it's better to run jobs on build agents. The way you create them is by configuring the credentials of a new user and then setting up a slave node (build agent). You'll need SSH connectivity enabled and your machine's IP address by typing `ip addr`.
 
-
-
-
-
-
-
-
+I did another build of the Go app on the agent as you can tell by its label of the screenshot of my jenkinsfile and it went as smooth as it can be.
 
 # Other important things I've learned
 
