@@ -24,7 +24,7 @@ pipeline {
             steps {
               
                   git branch: 'main', url: 'https://github.com/TankEngine-ish/GO_App_Jenkins_Deployment'
-                    // app = docker.build("gojenkinsdeployment")
+                    // app = docker.build("gojenkinsdeployment")  // creates a Docker image named gojenkinsdeployment
                     sh 'go build .'
                 }
             }
