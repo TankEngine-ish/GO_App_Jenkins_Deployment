@@ -44,11 +44,17 @@ There are plenty of things in this file which I haven't yet gone over so let's d
 `docker run -d --restart=always -p 127.0.0.1:23750:2375 -v /var/run/docker.sock:/var/run/docker.sock  alpine/socat  tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock` 
 The above line starts a container with Alpine Linux and SOCAT, exposing the Docker API on port 23750 of the host system and allowing Docker client commands to communicate with the Docker daemon running inside the container.
 
+![alt text](<public/docker cont.png>)
+
 * Next up I added the Jenkins user to the docker group with `sudo usermod -aG docker jenkins`, then I restarted Jenkins and the step was a success.
 
 ## Getting Blue Ocean
 
 Blue Ocean is a plugin that modernizes the UI of the pipeline interface.
+
+![alt text](<public/go blue ocean.png>)
+
+## Build Agent Set-Up
 
 
 
