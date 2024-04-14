@@ -31,6 +31,7 @@ pipeline {
         stage ('Run'){
             steps {
                     sh 'cd /var/lib/jenkins/workspace/go_full_pipeline && GO_App_Jenkins_Deployment &'
+                    // single '&' runs a command in the background and will return me to the command prompt straight away
                 }
             }
         }
